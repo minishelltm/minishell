@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strings2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:44:51 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/11 19:50:50 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,30 @@ int	is_alphanum(char *str, t_strtype type)
 			return (0);
 	}
 	return (1);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	i = 0;
+	j = 0;
+	new = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (new == NULL)
+		return (NULL);
+	while (s1[i])
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		new[i] = s2[j];
+		i++;
+		j++;
+	}
+	new[i] = '\0';
+	return (new);
 }

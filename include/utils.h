@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:40:44 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:46:14 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/11 19:51:06 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ int		includes(char *str, char c);
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 int		is_ws(char *str);
 int		free_tab(char **tab);
+char	*ft_strjoin(char const *s1, char const *s2);
 #endif
