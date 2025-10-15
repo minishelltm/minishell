@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_to_word_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:35:32 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 11:11:46 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/15 18:16:41 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,13 @@ int	findword(char const *str, int index)
 		return (0);
 	if (is_nonws(str[0]) == 0)
 		i = -1;
-	for (; str[j] != '\0'; j++)
+	while (str[j] != '\0')
 	{
 		if (is_nonws(str[j]) == 1 && is_nonws(str[j - 1]) == 0)
 			i++;
 		if (i == index)
 			break ;
+		j++;
 	}
 	if (i != index)
 	{
@@ -62,14 +63,15 @@ char	*getword(char const *str, int index)
 	ret = NULL;
 	if (j == -1)
 		return (NULL);
-	for (; str[j + i] != '\0' && is_nonws(str[j + i]) == 1; i++) // FIX OMG
-		continue ;
+	while (str[j + i] != '\0' && is_nonws(str[j + i]) == 1)
+		i++;
 	ret = malloc(i + 1);
 	i = 0;
-	for (; str[j] != '\0' && is_nonws(str[j]) == 1; j++) // FIX OMG
+	while (str[j] != '\0' && is_nonws(str[j]) == 1)
 	{
 		ret[i] = str[j];
 		i++;
+		j++;
 	}
 	ret[i] = '\0';
 	return (ret);
@@ -83,21 +85,23 @@ char	**ft_str_to_word_array(char const *str)
 
 	i = 0;
 	tmp = getword(str, i);
-	for (; tmp != NULL; i++)
+	while (tmp != NULL)
 	{
 		free(tmp);
 		tmp = getword(str, i);
+		i++;
 	}
 	ret = malloc(i * sizeof(char *));
 	if (ret == NULL)
 		return (NULL);
 	i = 0;
 	tmp = getword(str, i);
-	for (; tmp != NULL; tmp = getword(str, i))
+	while (tmp != NULL)
 	{
 		ret[i] = ft_strdup(tmp);
 		free(tmp);
 		i++;
+		tmp = getword(str, i);
 	}
 	ret[i] = NULL;
 	return (ret);

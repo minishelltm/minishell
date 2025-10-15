@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   realloc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:34:50 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:45:21 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/15 18:10:58 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
 	size_t	size_to_copy;
+	size_t	i;
 
-	size_to_copy = old_size < new_size ? old_size : new_size; // FIX OMG
+	i = 0;
+	if (old_size < new_size)
+		size_to_copy = old_size;
+	else
+		size_to_copy = new_size;
 	if (old_size == 0)
 		return (malloc(new_size));
 	if (new_size == 0)
@@ -31,8 +36,11 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	new_ptr = malloc(new_size);
 	if (!new_ptr)
 		return (NULL);
-	for (size_t i = 0; i < size_to_copy; ++i) // FIX OMG
+	while (i < size_to_copy)
+	{
 		((char *)new_ptr)[i] = ((char *)ptr)[i];
+		++i;
+	}
 	if (ptr)
 		free(ptr);
 	return (new_ptr);
@@ -40,7 +48,13 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 
 void	free_tab(char **tab)
 {
-	for (int i = 0; tab[i] != NULL; i++) // FIX OMG
+	int	i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
 		free(tab[i]);
+		i++;
+	}
 	free(tab);
 }

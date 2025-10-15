@@ -6,12 +6,12 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 17:04:21 by mmicael           #+#    #+#             */
-/*   Updated: 2025/10/14 18:54:22 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/15 18:21:33 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#ifndef TOKEN_H
+# define TOKEN_H
 
 typedef enum e_token_type
 {

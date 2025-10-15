@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:48:00 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/15 18:19:43 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ static char	**split_tab(char *line, char *sep)
 	int		i;
 	char	*ptr;
 	char	**ret;
+	int		j;
 
+	j = 0;
 	i = 0;
 	ptr = line;
 	ret = NULL;
-	for (int j = 0; line[j] != '\0'; j++) // FIX OMG
+	while (line[j] != '\0')
 	{
 		if (ft_strncmp(&line[j], sep, ft_strlen(sep)) == 0)
 		{
@@ -40,6 +42,7 @@ static char	**split_tab(char *line, char *sep)
 			i += is_not_null(ret[i]);
 			ptr = &line[j + 1];
 		}
+		j++;
 	}
 	ret = ft_realloc(ret, sizeof(char *) * i, sizeof(char *) * (i + 2));
 	ret[i] = ft_strdup(ptr);

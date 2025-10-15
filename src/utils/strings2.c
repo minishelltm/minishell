@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/11 19:50:50 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/15 18:11:55 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,38 @@
 
 int	includes(char *str, char c)
 {
-	for (int i = 0; str[i] != '\0'; i++) // FIX OMG
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
 		if (str[i] == c)
 			return (1);
+		i++;
 	}
 	return (0);
 }
 
 int	is_ws(char *str)
 {
-	for (int i = 0; str[i] != '\0'; i++) // FIX OMG
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
 		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
 			return (1);
+		i++;
 	}
 	return (0);
 }
 
 int	is_alphanum(char *str, t_strtype type)
 {
-	for (int i = 0; str[i] != '\0'; i++) // FIX OMG
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
 		if (type == ALPHANUM && !((str[i] >= 'a' && str[i] <= 'z')
 				|| (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0'
@@ -45,6 +56,7 @@ int	is_alphanum(char *str, t_strtype type)
 		if (type == ALPHA && !((str[i] >= 'a' && str[i] <= 'z')
 				|| (str[i] >= 'A' && str[i] <= 'Z')))
 			return (0);
+		i++;
 	}
 	return (1);
 }

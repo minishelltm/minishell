@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:55:32 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/15 18:32:10 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,18 +149,21 @@ static int	shell_loop(char ***args, t_node *env, char *line)
 {
 	int		interrupt;
 	char	**commands;
+	int		i;
 
+	i = 0;
 	interrupt = 0;
 	commands = NULL;
 	line[ft_strlen(line) - 1] = '\0';
 	if (line[0] == 4)
 		exit(0);
-	commands = parse_semicolon(line); // FIX OMG
-	for (int i = 0; commands[i] != NULL; i++)
+	commands = parse_semicolon(line);
+	while (commands[i] != NULL)
 	{
 		interrupt = shell_more_loop(args, env, commands[i]);
 		if (interrupt == 255)
 			exit(0);
+		i++;
 	}
 	free(commands);
 	return (interrupt);
@@ -192,5 +195,5 @@ int	shell(t_node *env)
 		interrupt = shell_loop(&args, env, line);
 		lsize = 0;
 	}
-	return 0;
+	return (0);
 }
