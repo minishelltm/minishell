@@ -6,7 +6,7 @@
 #    By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/10 10:57:37 by tonio             #+#    #+#              #
-#    Updated: 2025/10/15 18:27:22 by mmicael          ###   ########.fr        #
+#    Updated: 2025/10/17 17:52:46 by mmicael          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -g3 -I./include -Werror
 SRC = 	./main.c						\
 		./src/utils/strings.c			\
+		./src/utils/strings_utils.c     \
 		./src/utils/strings2.c			\
 		./src/utils/path.c				\
 		./src/utils/list.c				\

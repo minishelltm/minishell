@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:40:44 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/11 19:51:06 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/17 19:51:11 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ typedef enum e_strtype
 }		t_strtype;
 int		is_alphanum(char *str, t_strtype type);
 int		ft_strncmp(char *a, char *b, int size);
+int		skip_to_index(char const *str, char sep, int index);
 char	*ft_strdup(char const *src);
 int		ft_strlen(char const *str);
+char	*ft_strdup_safe(char *s1, char *s2);
 char	*get_first_word(char *command);
 char	*ft_pathcat(char *path, char *name);
 char	**ft_str_to_word_array(char const *str);

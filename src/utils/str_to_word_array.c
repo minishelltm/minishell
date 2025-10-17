@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:35:32 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/15 18:16:41 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/17 20:03:29 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ char	**ft_str_to_word_array(char const *str)
 	while (tmp != NULL)
 	{
 		free(tmp);
-		tmp = getword(str, i);
 		i++;
+		tmp = getword(str, i);
 	}
 	ret = malloc(i * sizeof(char *));
 	if (ret == NULL)
@@ -98,9 +98,8 @@ char	**ft_str_to_word_array(char const *str)
 	tmp = getword(str, i);
 	while (tmp != NULL)
 	{
-		ret[i] = ft_strdup(tmp);
+		ret[i++] = ft_strdup(tmp);
 		free(tmp);
-		i++;
 		tmp = getword(str, i);
 	}
 	ret[i] = NULL;

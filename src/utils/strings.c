@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:43:08 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/15 18:37:57 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/17 19:49:10 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,9 @@ char	*ft_strcat(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	if (s1 == NULL || s2 == NULL)
-	{
-		if (s1 == NULL)
-			return (ft_strdup(s2));
-		else
-			return (ft_strdup(s1));
-	}
 	dest = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (s1 == NULL || s2 == NULL)
+		return (ft_strdup_safe(s1, s2));
 	if (dest == NULL)
 		return (NULL);
 	while (s1[i] != '\0')
@@ -96,7 +91,6 @@ char	*ft_strcat(char *s1, char *s2)
 	return (dest);
 }
 
-// FIX OMG
 char	*split(char const *str, char sep, int index, int end)
 {
 	int		i;
@@ -105,20 +99,11 @@ char	*split(char const *str, char sep, int index, int end)
 	int		len;
 	char	*ret;
 
-	i = 0;
 	j = 0;
 	k = 0;
 	len = ft_strlen(str);
 	ret = malloc(len + 1);
-	while (j < index)
-	{
-		if (str[i] == sep)
-		{
-			j++;
-		}
-		i++;
-	}
-	j = 0;
+	i = skip_to_index(str, sep, index);
 	while (str[i] != '\0' && (k < end || end == 0))
 	{
 		ret[j] = str[i];
