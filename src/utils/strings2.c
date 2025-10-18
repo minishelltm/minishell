@@ -6,35 +6,59 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:44:51 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/14 13:14:43 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
+int	ft_strncmp(char *a, char *b, int size)
+{
+	int	i;
+
+	i = 0;
+	while (a[i] == b[i] && a[i] != '\0' && b[i] != '\0' && (i < size - 1
+			|| size == 0))
+	{
+		i++;
+	}
+	return (a[i] - b[i]);
+}
+
 int	includes(char *str, char c)
 {
-	for (int i = 0; str[i] != '\0'; i++) // FIX OMG
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
 		if (str[i] == c)
 			return (1);
+		i++;
 	}
 	return (0);
 }
 
 int	is_ws(char *str)
 {
-	for (int i = 0; str[i] != '\0'; i++) // FIX OMG
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
 		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
-			return (1);
+			return (0);
+		i++;
 	}
-	return (0);
+	return (1);
 }
 
 int	is_alphanum(char *str, t_strtype type)
 {
-	for (int i = 0; str[i] != '\0'; i++) // FIX OMG
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
 		if (type == ALPHANUM && !((str[i] >= 'a' && str[i] <= 'z')
 				|| (str[i] >= 'A' && str[i] <= 'Z') || (str[i] >= '0'
@@ -45,6 +69,7 @@ int	is_alphanum(char *str, t_strtype type)
 		if (type == ALPHA && !((str[i] >= 'a' && str[i] <= 'z')
 				|| (str[i] >= 'A' && str[i] <= 'Z')))
 			return (0);
+		i++;
 	}
 	return (1);
 }

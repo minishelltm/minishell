@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:43 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:49:39 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/14 13:44:00 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,16 @@ t_node	*envify(char **env)
 {
 	t_env_data	data;
 	t_node		*list;
+	int			i;
 
+	i = 0;
 	data = dataify(env[0]);
 	list = create_node(data);
-	for (int i = 1; env[i] != NULL; i++) // FIX OMG
+	while (env[i] != NULL)
 	{
 		data = dataify(env[i]);
 		add_node(list, create_node(data));
+		i++;
 	}
 	return (list);
 }

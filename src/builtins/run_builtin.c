@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:39:14 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:47:03 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/14 04:14:54 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,20 @@ int	mysetenv(char **args, t_node *env)
 int	myunsetenv(char **args, t_node *env)
 {
 	t_node	*del;
+	int		i;
 
+	i = 1;
 	del = NULL;
 	if (args[1] == NULL)
 	{
 		write(2, "unsetenv: Too few arguments.\n", 29);
 	}
-	for (int i = 1; args[i] != NULL; ++i) // FIX OMG
+	while (args[i] != NULL)
 	{
 		del = find_node(env, (ft_strcat(args[i], "=")));
 		if (del != NULL)
 			delete_node(env, del);
+		i++;
 	}
 	return (0);
 }

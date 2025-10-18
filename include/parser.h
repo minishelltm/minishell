@@ -1,0 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/15 00:01:07 by tonio             #+#    #+#             */
+/*   Updated: 2025/10/18 16:18:34 by tonio            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PARSER_H
+# define PARSER_H
+
+typedef enum e_token_type
+{
+	WORD,
+	REDIR_IN, // <
+	REDIR_OUT, // >
+	HEREDOC, // <<
+	APPEND, // >>
+	PIPE, // |
+}					t_token_type;
+
+typedef struct s_token
+{
+	char			*value;
+	int				type;
+	struct s_token	*next;
+	struct s_token	*prev;
+}					t_token;
+
+typedef struct s_command
+{
+	char				**args;
+	char				*infile;
+	char				*outfile;
+	int					append;
+	char				*heredoc;
+	struct s_command	*next;
+	struct s_command	*prev;
+}					t_command;
+
+int			process_token(t_command *cmd, t_token **token, int *i);
+int			process_special_token(t_command *cmd, t_token **token);
+int			alloc_args(t_command *cmd, int ac);
+int			count_args_cmd(t_token *token);
+t_command	*init_command(void);
+void		free_command(t_command *cmd);
+
+#endif

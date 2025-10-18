@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:39:54 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:55:26 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/14 01:34:38 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,5 @@
 int		shell(t_node *env);
 char	*find_bin_path(char *path, char *name);
 char	**parse_semicolon(char *line);
+char	*find_bin(char **args, t_node *env);
 #endif

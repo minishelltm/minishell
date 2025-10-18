@@ -6,35 +6,27 @@
 #    By: tonio <tonio@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/10 10:57:37 by tonio             #+#    #+#              #
-#    Updated: 2025/10/10 10:57:39 by tonio            ###   ########.fr        #
+#    Updated: 2025/10/14 15:36:30 by tonio            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
-CFLAGS = -Wall -Wextra -g3 -I./include -Werror
-SRC = 	./main.c						\
-		./src/utils/strings.c			\
-		./src/utils/strings2.c			\
-		./src/utils/path.c				\
-		./src/utils/list.c				\
-		./src/utils/list2.c				\
-		./src/utils/realloc.c			\
-		./src/process_env/envify.c		\
-		./src/utils/str_to_word_array.c	\
-		./src/shell/shell.c 			\
-		./src/run/run.c					\
-		./src/builtins/run_builtin.c	\
-		./src/builtins/cd.c				\
-		./src/parser/parse.c			\
-
-OBJ = $(SRC:.c=.o)
+CC		= cc
+CFLAGS	= -Wall -Wextra -g3 -Werror
+SRCDIR	= src
+MAIN	= main.c
+INC		= include
+LIBS	= -lreadline
+SRC		= $(wildcard $(SRCDIR)/*/*.c) $(MAIN)
+OBJ		= $(SRC:.c=.o)
 
 TARGET = minishell
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(INC) $(OBJ) -o $(TARGET)
+	$(CC) $(CFLAGS) -I./$(INC) $(OBJ) -o $(TARGET) $(LIBS)
+%.o:%.c
+	$(CC) $(CFLAGS) -I./$(INC) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)
