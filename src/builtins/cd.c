@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:39:28 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/17 17:01:58 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/18 03:32:06 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,26 @@
 #include "shell.h"
 #include "utils.h"
 
+static int	home_logic(char *args, t_node *env)
+{
+	char	*home;
+	char	*path;
+	int		retval;
+
+	home = find_node(env, "HOME=")->data.value;
+	if (args[1] == '\0')
+		path = ft_strdup(home);
+	else
+		path = ft_strjoin(home, args + 1);
+	retval = chdir(path);
+	free(path);
+	return (retval);
+}
+
 int	ft_cd(char **args, t_node *env)
 {
 	int		retval;
 	char	*oldpwd;
-	char	*home;
-	char	*path;
 
 	retval = -404;
 	oldpwd = getcwd(NULL, 0);
@@ -35,15 +49,7 @@ int	ft_cd(char **args, t_node *env)
 	else if (ft_strncmp(args[1], "/", 0) == 0)
 		retval = chdir("/");
 	else if (args[1][0] == '~')
-	{
-		home = find_node(env, "HOME=")->data.value;
-		if (args[1][1] == '\0')
-			path = ft_strdup(home);
-		else
-			path = ft_strjoin(home, args[1] + 1);
-		retval = chdir(path);
-		free(path);
-	}
+		retval = home_logic(args[1], env);
 	else
 		retval = chdir(args[1]);
 	if (retval == 0)

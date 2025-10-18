@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/15 18:19:43 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/18 03:33:29 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ static char	**split_tab(char *line, char *sep)
 	ret = ft_realloc(ret, sizeof(char *) * i, sizeof(char *) * (i + 2));
 	ret[i] = ft_strdup(ptr);
 	ret[i + 1] = NULL;
-	free(line);
-	return (ret);
+	return (free(line), ret);
 }
 
 char	**parse_semicolon(char *line)

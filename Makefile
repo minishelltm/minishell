@@ -6,7 +6,7 @@
 #    By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/10 10:57:37 by tonio             #+#    #+#              #
-#    Updated: 2025/10/17 17:52:46 by mmicael          ###   ########.fr        #
+#    Updated: 2025/10/18 03:24:05 by mmicael          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = 	./main.c						\
 		./src/process_env/envify.c		\
 		./src/utils/str_to_word_array.c	\
 		./src/shell/shell.c 			\
+		./src/shell/find_bin.c 			\
 		./src/run/run.c					\
 		./src/builtins/run_builtin.c	\
 		./src/builtins/cd.c				\
