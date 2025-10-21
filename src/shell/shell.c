@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/18 03:23:46 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/21 17:35:20 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	shell(t_node *env)
 	line = NULL;
 	args = (char **){NULL};
 	lsize = 0;
-	size = 0;
 	interrupt = 0;
+	setup_signals();
 	while (1)
 	{
 		if (interrupt == 255)

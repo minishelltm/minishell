@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:40:44 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/17 19:51:11 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/21 16:05:23 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,6 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 int		is_ws(char *str);
 int		free_tab(char **tab);
 char	*ft_strjoin(char const *s1, char const *s2);
+void	setup_signals(void);
+
 #endif

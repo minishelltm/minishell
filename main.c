@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:39 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:48:54 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/21 16:04:17 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ void	sig_handler(int sig)
 	if (sig == SIGINT)
 		write(1, "\n$> ", 4);
 	return ;
+}
+
+void	setup_signals(void)
+{
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	clean_oldpwd(t_node *list)
