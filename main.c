@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:39 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/21 16:04:17 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/22 20:11:57 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "shell.h"
 #include "utils.h"
 #include <signal.h>
+
+volatile sig_atomic_t g_exit_code = 0;
 
 void	sig_handler(int sig)
 {

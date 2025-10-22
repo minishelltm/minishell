@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/21 17:33:08 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/22 20:13:00 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static int	handle_status(int status)
 			write(2, "Quit (core dumped)\n", 20);
 	}
 	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
+		g_exit_code = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
+		g_exit_code = 128 + WTERMSIG(status);
 	return (1);
 }
 

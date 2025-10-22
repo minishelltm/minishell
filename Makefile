@@ -6,7 +6,7 @@
 #    By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/10 10:57:37 by tonio             #+#    #+#              #
-#    Updated: 2025/10/18 03:24:05 by mmicael          ###   ########.fr        #
+#    Updated: 2025/10/22 20:14:29 by mmicael          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC = 	./main.c						\
 		./src/builtins/run_builtin.c	\
 		./src/builtins/cd.c				\
 		./src/parser/parse.c			\
+		./src/expansion/expand.c        \
 
 OBJ = $(SRC:.c=.o)
 

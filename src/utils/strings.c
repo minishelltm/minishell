@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:43:08 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/17 19:49:10 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/22 19:06:56 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ int	ft_strncmp(char *a, char *b, int size)
 	i = 0;
 	while (a[i] == b[i] && a[i] != '\0' && b[i] != '\0' && (i < size - 1
 			|| size == 0))
-	{
 		i++;
-	}
 	return (a[i] - b[i]);
 }
 
@@ -57,9 +55,7 @@ int	ft_strlen(char const *str)
 	if (str == NULL)
 		return (0);
 	while (str[i] != '\0')
-	{
 		i++;
-	}
 	return (i);
 }
 

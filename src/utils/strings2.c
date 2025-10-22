@@ -6,25 +6,11 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/15 18:11:55 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/22 20:22:51 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
-
-int	includes(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 int	is_ws(char *str)
 {
@@ -85,4 +71,48 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	new[i] = '\0';
 	return (new);
+}
+
+char	*ft_itoa(int n)
+{
+	int		i;
+	long	nb;
+	int		sign;
+	char	*new;
+
+	nb = n;
+	i = countdigits(nb);
+	sign = 0;
+	new = (char *)malloc(sizeof(char) * (i + 1));
+	if (new == NULL)
+		return (NULL);
+	new[i] = '\0';
+	if (nb < 0)
+	{
+		new[0] = '-';
+		nb *= -1;
+		sign++;
+	}
+	while (i > sign)
+	{
+		i--;
+		new[i] = (nb % 10) + '0';
+		nb /= 10;
+	}
+	return (new);
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t siz)
+{
+	size_t	i;
+
+	i = 0;
+	while (src[i] && i + 1 < siz)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	if (siz > 0)
+		dst[i] = '\0';
+	return (ft_strlen(src));
 }

@@ -6,7 +6,7 @@
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/21 17:35:20 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/22 20:24:16 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "run.h"
 #include "shell.h"
 #include "utils.h"
+#include "expansion.h"
 #include <dirent.h>
 #include <sys/stat.h>
 
@@ -34,6 +35,7 @@ int	shell_more_loop(char ***args, t_node *env, char *line)
 	interrupt = 0;
 	path_to_bin = NULL;
 	*args = ft_str_to_word_array(line);
+	expand_dollars(*args, env);
 	if (includes(line, '|') == 1)
 		return (0);
 	free(line);
