@@ -6,12 +6,13 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 00:01:07 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/18 16:18:34 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/25 13:24:51 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+# include <stdbool.h>
 
 typedef enum e_token_type
 {
@@ -23,10 +24,19 @@ typedef enum e_token_type
 	PIPE, // |
 }					t_token_type;
 
+typedef enum s_quote_type
+{
+	NO_QUOTE,
+	SQUOTE,
+	DQUOTE,
+}					t_quote_type;
+
 typedef struct s_token
 {
 	char			*value;
-	int				type;
+	t_token_type	type;
+	t_quote_type	quote_type;
+	bool			should_merge;
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;

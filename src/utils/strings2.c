@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/14 13:14:43 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/25 13:23:03 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ int	ft_strncmp(char *a, char *b, int size)
 		i++;
 	}
 	return (a[i] - b[i]);
+}
+
+int	is_empty(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (is_ws(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	includes(char *str, char c)
