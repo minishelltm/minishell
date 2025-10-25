@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strings3.c                                         :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/25 18:29:09 by ande-vat         ###   ########.fr       */
+/*   Created: 2024/11/05 04:15:55 by tonio             #+#    #+#             */
+/*   Updated: 2025/10/25 18:12:38 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include <stddef.h>
 
-int	is_ws(char c)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	return (c == ' ' || (c <= 13 && c >= 9));
-}
+	size_t			i;
+	unsigned char	*str;
 
-int	is_operator(char c)
-{
-	return (c == '>' || c == '<' || c == '|');
-}
-
-int	is_quote(char c)
-{
-	return (c == '"' || c == '\'');
+	i = 0;
+	str = b;
+	while (i < len)
+	{
+		str[i] = c;
+		i++;
+	}
+	return (b);
 }

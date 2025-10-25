@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:02:49 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/25 13:22:43 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/25 18:29:00 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "utils.h"
 #include <stdlib.h>
 
 t_token	*init_token(void)

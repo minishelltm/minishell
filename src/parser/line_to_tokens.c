@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   line_to_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:52:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/25 13:23:43 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/25 16:31:23 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	make_word_token(char *input, t_token **list, int *i)
 {
 	t_token	*new_token;
 	int		ct;
+	char	buf;
 
 	new_token = init_token();
 	ct = 0;
@@ -55,10 +56,12 @@ void	make_word_token(char *input, t_token **list, int *i)
 		ct++;
 	if (ct == 0)
 		return (free_tokens(new_token));
-	new_token->should_merge = is_quote(input[(*i) + ct]);
+	buf = input[(*i) + ct];
+	new_token->should_merge = is_quote(buf);
 	input[(*i) + ct] = '\0';
-	new_token->value = ft_strdup(&input[(*i)]);
-	(*i) += ct + 1;
+	new_token->value = ft_strdup(&input[(*i)]); // use substr lmao
+	input[(*i) + ct] = buf;
+	(*i) += ct;
 	add_token_back(list, new_token);
 }
 

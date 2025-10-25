@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 00:01:07 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/25 13:24:51 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/25 18:09:24 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ int			alloc_args(t_command *cmd, int ac);
 int			count_args_cmd(t_token *token);
 t_command	*init_command(void);
 void		free_command(t_command *cmd);
-
+t_token		*init_token(void);
+void		free_tokens(t_token *token);
+void		add_token_back(t_token **list, t_token *new_token);
 #endif

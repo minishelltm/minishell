@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:40:44 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:46:14 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/25 18:12:21 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ char	*ft_strcat(char *s1, char *s2);
 char	*split(char const *src, char sep, int index, int end);
 int		includes(char *str, char c);
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size);
-int		is_ws(char *str);
+int		is_ws(char c);
+int		is_empty(char *str);
+int		is_operator(char c);
+int		is_quote(char c);
 int		free_tab(char **tab);
+void	*ft_memset(void *b, int c, size_t len);
 #endif

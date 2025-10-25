@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strings2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/25 13:23:03 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/25 18:13:44 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_empty(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (is_ws(str[i]))
+		if (!is_ws(str[i]))
 			return (0);
 		i++;
 	}
@@ -51,20 +51,6 @@ int	includes(char *str, char c)
 		i++;
 	}
 	return (0);
-}
-
-int	is_ws(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
-			return (0);
-		i++;
-	}
-	return (1);
 }
 
 int	is_alphanum(char *str, t_strtype type)
