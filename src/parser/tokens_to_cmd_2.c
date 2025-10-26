@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 19:13:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/18 16:19:49 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/26 11:18:24 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,19 @@
 int	count_args_cmd(t_token *token)
 {
 	int	count;
+	t_token	*tmp;
 
+	tmp = token;
 	count = 0;
-	while (token && token->type != PIPE)
+	while (tmp && tmp->type != PIPE)
 	{
-		if (token->type == WORD && (token->prev == NULL
-				|| (token->prev->type != REDIR_IN
-					&& token->prev->type != REDIR_OUT
-					&& token->prev->type != APPEND
-					&& token->prev->type != HEREDOC)))
+		if (tmp->type == WORD && (tmp->prev == NULL
+				|| (tmp->prev->type != REDIR_IN
+					&& tmp->prev->type != REDIR_OUT
+					&& tmp->prev->type != APPEND
+					&& tmp->prev->type != HEREDOC)))
 			count++;
-		token = token->next;
+		tmp = tmp->next;
 	}
 	return (count);
 }

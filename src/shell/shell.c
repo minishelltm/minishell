@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/18 16:41:39 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/26 19:33:22 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,16 @@ static int	cmd_not_found(char *cmd)
 	return (1);
 }
 
-int	shell_more_loop(char ***args, t_node *env, char *line)
+int	shell_more_loop(char ***args, t_node *env, t_command *command)
 {
 	int		interrupt;
 	char	*path_to_bin;
 
 	interrupt = 0;
 	path_to_bin = NULL;
-	*args = ft_str_to_word_array(line);
+	*args = command->args;
 	if (*args == NULL)
 		return (0);
-	if (includes(line, '|') == 1)
-		return (0);
-	free(line);
 	interrupt = run_builtin(*args, env);
 	if (interrupt == 404)
 	{
@@ -56,20 +53,21 @@ int	shell_more_loop(char ***args, t_node *env, char *line)
 
 static int	shell_loop(char ***args, t_node *env, char *line)
 {
-	int		interrupt;
-	char	**commands;
-	int		i;
+	int			interrupt;
+	t_command	*commands;
+	t_command	*current;
 
-	i = 0;
 	interrupt = 0;
 	commands = NULL;
-	commands = parse_semicolon(line);
-	while (commands[i] != NULL)
+	commands = parse_input(line, env);
+	current = commands;
+	while (current != NULL)
 	{
-		interrupt = shell_more_loop(args, env, commands[i]);
+		handle_pipes_and_redirs(env, commands);
+		interrupt = shell_more_loop(args, env, commands);
 		if (interrupt == 255)
 			exit(0); // Handle exit better
-		i++;
+		current = current->next;
 	}
 	free(commands);
 	return (interrupt);

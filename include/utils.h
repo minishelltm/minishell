@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:40:44 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/25 18:12:21 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/26 17:56:39 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,9 @@ int		is_operator(char c);
 int		is_quote(char c);
 int		free_tab(char **tab);
 void	*ft_memset(void *b, int c, size_t len);
+int		ft_isalnum(int c);
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_substr(char const *s, int start, int len);
+void	*ft_calloc(int nmemb, int size);
 #endif

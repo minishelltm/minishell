@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/16 23:16:39 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/26 19:19:59 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,77 +15,59 @@
 #include <errno.h>
 #include <signal.h>
 
-static char	*get_bin_name(char *path_to_bin)
+static int	handle_child(char *path_to_bin, char **args, char **env)
 {
-	char	*cpy;
-	char	*retval;
-	char	*token;
-
-	cpy = ft_strdup(path_to_bin);
-	retval = NULL;
-	token = strtok(cpy, "/");
-	while (token != NULL)
-	{
-		retval = ft_strdup(token);
-		token = strtok(NULL, "/");
-	}
-	free(cpy);
-	return (retval);
-}
-
-static int	run_bin_with_path(char *path_to_bin, char **args, char **env)
-{
-	char	*errstring;
-
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (execve(path_to_bin, args, env) == -1)
 	{
-		errstring = strerror(errno);
-		write(2, args[0], ft_strlen(args[0]));
-		write(2, ": ", 2);
-		write(2, errstring, ft_strlen(errstring));
-		if (errno == ENOEXEC)
-			write(2, ". Wrong Architecture", 20);
-		write(2, ".", 1);
-		write(2, "\n", 1);
-		return (84);
+		perror(args[0]);
+		exit(127);
 	}
-	exit(0);
 	return (0);
 }
 
-void	segfault(int status)
+static int	handle_status(int status)
 {
-	write(2, "Segmentation fault", 19);
-	if (__WCOREDUMP(status))
-		write(2, " (core dumped)", 14);
-	write(2, "\n", 1);
+	int	sig;
+
+	if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGSEGV)
+		{
+			write(2, "Segmentation fault", 19);
+			if (WCOREDUMP(status))
+				write(2, " (core dumped)", 14);
+			write(2, "\n", 1);
+		}
+		else if (sig == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 20);
+	}
+	if (WIFEXITED(status))
+		g_exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_exit_code = 128 + WTERMSIG(status);
+	return (1);
 }
 
-static int	create_fork_and_run(char *path_to_bin, char **args, char **env)
+int	create_fork_and_run(char *path_to_bin, char **args, char **env)
 {
-	int	pid;
-	int	status;
+	pid_t	pid;
+	int		status;
+	int		exit_code;
 
 	pid = fork();
-	status = 0;
 	if (pid == -1)
 	{
 		perror("fork");
 		return (84);
 	}
 	if (pid == 0)
-	{
-		if (run_bin_with_path(path_to_bin, args, env) == 84)
-			exit(84);
-	}
-	else
-	{
-		if (waitpid(pid, &status, 0) == -1)
-			perror(get_bin_name(path_to_bin));
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGSEGV)
-			segfault(status);
-	}
-	return (0);
+		handle_child(path_to_bin, args, env);
+	waitpid(pid, &status, 0);
+	exit_code = handle_status(status);
+	return (exit_code);
 }
 
 int	run_bin(char *cmd, char **args, char **env)

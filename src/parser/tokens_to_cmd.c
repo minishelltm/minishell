@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_to_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 19:13:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/25 18:26:56 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/26 19:29:02 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ int	fill_command(t_command *cmd, t_token **token)
 		*token = (*token)->next;
 	}
 	if (*token && (*token)->type == PIPE)
+	{
 		*token = (*token)->next;
+	}
 	return (0);
 }
 
@@ -83,8 +85,6 @@ t_command	*token_to_cmd(t_token *tokens)
 	t_command	*cmd_head;
 	int			ac;
 
-	if (tokens == NULL)
-		return (NULL);
 	cmd_head = init_command();
 	if (cmd_head == NULL)
 		return (NULL);
@@ -97,6 +97,11 @@ t_command	*token_to_cmd(t_token *tokens)
 			return (free_command(cmd_head), NULL);
 		if (fill_command(cmd, &token) == -1)
 			return (free_command(cmd_head), NULL);
+		if (token)
+		{
+			cmd->next = init_command();
+			cmd = cmd->next;
+		}
 	}
 	return (cmd_head);
 }
