@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:52:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 10:43:43 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 11:23:01 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_token	*line_to_tokens(char *input)
 		else
 			make_word_token(input, &list, &i);
 		if (i == -1)
-			return (NULL);	
+			return (NULL);
 	}
 	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 11:13:36 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 11:21:44 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,59 +111,4 @@ t_command	*parse_input(char *line, t_node *env)
 	cmds = token_to_cmd(tks);
 	free_tokens(tks);
 	return (cmds);
-}
-
-t_token	*validate(t_token *tks)
-{
-	t_token *t;
-	t_token *last;
-
-	if (tks == NULL)
-		return (NULL);
-	t = tks;
-	/* check first token */
-	if (t->type == PIPE)
-	{
-		write(2, "syntax error\n", 13);
-		free_tokens(tks);
-		g_exit_code = 258;
-		return (NULL);
-	}
-	/* find last token */
-	last = tks;
-	while (last->next)
-		last = last->next;
-	if (last->type == PIPE)
-	{
-		write(2, "syntax error\n", 13);
-		free_tokens(tks);
-		g_exit_code = 258;
-		return (NULL);
-	}
-	while (t)
-	{
-		if (t->type == PIPE)
-		{
-			if (!t->next || !t->prev || t->next->type == PIPE)
-			{
-				write(2, "syntax error\n", 13);
-				free_tokens(tks);
-				g_exit_code = 258;
-				return (NULL);
-			}
-		}
-		else if (t->type == REDIR_IN || t->type == REDIR_OUT
-			|| t->type == APPEND || t->type == HEREDOC)
-		{
-			if (!t->next || t->next->type != WORD)
-			{
-				write(2, "syntax error\n", 13);
-				free_tokens(tks);
-				g_exit_code = 258;
-				return (NULL);
-			}
-		}
-		t = t->next;
-	}
-	return (tks);
 }
