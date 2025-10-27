@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:52:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/26 19:14:59 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 06:35:23 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	make_quote_token(char *input, t_token **list, int *i)
 		input[(*i) + ct] = '\0';
 		new_token->value = ft_strdup(&input[*i]);
 	}
-	else // unmatched quote
+	else // unmatched quote. CRASHES, FIX (+ handle memory in general lol)
 		return (free_tokens(*list), free_tokens(new_token));
 	input[(*i) + ct] = quote_char;
 	*i += ct + 1;
@@ -59,7 +59,7 @@ void	make_word_token(char *input, t_token **list, int *i)
 	buf = input[(*i) + ct];
 	new_token->should_merge = is_quote(buf);
 	input[(*i) + ct] = '\0';
-	new_token->value = ft_strdup(&input[(*i)]); // use substr lmao
+	new_token->value = ft_strdup(&input[(*i)]);
 	input[(*i) + ct] = buf;
 	(*i) += ct;
 	add_token_back(list, new_token);
@@ -88,7 +88,7 @@ void	make_op_token(char *input, t_token **list, int *i)
 		new_token->type = REDIR_OUT;
 	else if (input[*i] == '|')
 		new_token->type = PIPE;
-	new_token->value = ft_strdup(""); // Value can be empty. I dont even really have to do that actually
+	new_token->value = ft_strdup("");
 	add_token_back(list, new_token);
 	(*i)++;
 }

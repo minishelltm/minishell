@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 19:13:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/26 11:18:24 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 06:34:22 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int	count_args_cmd(t_token *token)
 {
-	int	count;
+	int		count;
 	t_token	*tmp;
 
 	tmp = token;

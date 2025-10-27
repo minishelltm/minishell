@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:39:14 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/14 04:14:54 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 05:36:00 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 
 static int	check_env_key(char *key)
 {
-	if (!((key[0] >= 'a' && key[0] <= 'z') || (key[0] >= 'A' && key[0] <= 'Z')))
+	if (!((key[0] >= 'a' && key[0] <= 'z')
+			|| (key[0] >= 'A' && key[0] <= 'Z')
+			|| key[0] == '_'))
 	{
-		write(2, "setenv: Variable name must begin with a letter.\n", 48);
+		write(2, "setenv: Variable name must begin with a letter or _.\n", 54);
 		return (1);
 	}
 	if (!is_alphanum(key, ALPHANUM))
@@ -72,7 +74,7 @@ int	mysetenv(char **args, t_node *env)
 		env = update_env(key, ft_strdup(""), env);
 		return (0);
 	}
-	write(2, "setenv: Too many arguments.\n", 26);
+	write(2, "export: Too many arguments.\n", 29);
 	return (0);
 }
 
@@ -85,7 +87,7 @@ int	myunsetenv(char **args, t_node *env)
 	del = NULL;
 	if (args[1] == NULL)
 	{
-		write(2, "unsetenv: Too few arguments.\n", 29);
+		write(2, "unset: Too few arguments.\n", 27);
 	}
 	while (args[i] != NULL)
 	{
@@ -102,7 +104,7 @@ int	run_builtin(char **args, t_node *env)
 	int	status;
 
 	status = 404;
-	if (ft_strncmp(args[0], "unsetenv", 0) == 0)
+	if (ft_strncmp(args[0], "unset", 0) == 0)
 		return (myunsetenv(args, env));
 	if (ft_strncmp(args[0], "cd", 0) == 0)
 	{
@@ -117,8 +119,12 @@ int	run_builtin(char **args, t_node *env)
 	}
 	if (ft_strncmp(args[0], "env", 0) == 0)
 		return (myenv(env));
-	if (ft_strncmp(args[0], "setenv", 0) == 0)
+	if (ft_strncmp(args[0], "export", 0) == 0)
 		return (mysetenv(args, env));
+	// if (ft_strncmp(args[0], "pwd", 0) == 0)
+	//	return (ft_pwd(args, env));
+	// if (ft_strncmp(args[0], "echo", 0) == 0)
+	// 	return (ft_echo(args, env));
 	if (ft_strncmp(args[0], "exit", 0) == 0)
 		return (255);
 	return (status);

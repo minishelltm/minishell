@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/26 19:33:22 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 08:17:52 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,54 +21,35 @@
 #include <readline/history.h>
 #include <stdlib.h>
 
-static int	cmd_not_found(char *cmd)
+int	is_blank_line(char *line)
 {
-	write(2, cmd, ft_strlen(cmd));
-	write(2, ": Command not found.\n", 22);
-	return (1);
-}
+	int	i;
 
-int	shell_more_loop(char ***args, t_node *env, t_command *command)
-{
-	int		interrupt;
-	char	*path_to_bin;
-
-	interrupt = 0;
-	path_to_bin = NULL;
-	*args = command->args;
-	if (*args == NULL)
-		return (0);
-	interrupt = run_builtin(*args, env);
-	if (interrupt == 404)
+	i = 0;
+	while (line && line[i])
 	{
-		if (find_node(env, "PATH=") != NULL)
-			path_to_bin = find_bin(*args, env);
-		if (path_to_bin == NULL)
-			return (cmd_not_found(*(args)[0]));
-		interrupt = run_bin(path_to_bin, *args, stringify(env));
-		free(path_to_bin);
+		if (!is_ws(line[i]))
+			return (0);
+		i++;
 	}
-	return (interrupt);
+	free(line);
+	return (1);
 }
 
 static int	shell_loop(char ***args, t_node *env, char *line)
 {
 	int			interrupt;
 	t_command	*commands;
-	t_command	*current;
 
+	(void)args;
 	interrupt = 0;
 	commands = NULL;
 	commands = parse_input(line, env);
-	current = commands;
-	while (current != NULL)
-	{
-		handle_pipes_and_redirs(env, commands);
-		interrupt = shell_more_loop(args, env, commands);
-		if (interrupt == 255)
-			exit(0); // Handle exit better
-		current = current->next;
-	}
+	if (commands == NULL)
+		return (0);
+	interrupt = run_commands(commands, env);
+	if (interrupt == 255)
+		exit(0); // Handle exit better
 	free(commands);
 	return (interrupt);
 }
@@ -88,11 +69,8 @@ int	shell(t_node *env)
 		line = readline("minishell$ ");
 		if (!line)
 			exit(0);
-		if (*line == '\0')
-		{
-			free(line);
+		if (is_blank_line(line))
 			continue ;
-		}
 		add_history(line);
 		interrupt = shell_loop(&args, env, line);
 		free(line);

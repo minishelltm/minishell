@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:39 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/26 19:30:46 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 08:36:55 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 #include <signal.h>
 #include "parser.h"
 
-
-volatile sig_atomic_t g_exit_code = 0;
+volatile sig_atomic_t	g_exit_code = 0;
 
 void	sig_handler(int sig)
 {
@@ -36,6 +35,7 @@ void	setup_signals(void)
 void	clean_oldpwd(t_node *list)
 {
 	update_env("OLDPWD=", ft_strdup(""), list);
+	update_env("PWD=", getcwd(NULL, 0), list);
 }
 
 int	main(int ac, char **av, char **env)
@@ -48,9 +48,7 @@ int	main(int ac, char **av, char **env)
 	clean_oldpwd(list);
 	signal(SIGINT, sig_handler);
 	if (ac != 1 || av[1] != NULL)
-	{
 		return (84);
-	}
 	retval = shell(list);
 	free_list(list);
 	return (retval);

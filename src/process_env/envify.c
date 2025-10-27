@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:43 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/14 13:44:00 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/26 23:03:15 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ t_node	*update_env(char *key, char *value, t_node *list)
 	t_env_data	data;
 	t_node		*node;
 
-	data = (t_env_data){key, value};
-	node = create_node(data);
 	if (update_node(list, key, value) == 0)
 		return (list);
+	data = (t_env_data){key, value};
+	node = create_node(data);
 	add_node(list, node);
 	return (list);
 }

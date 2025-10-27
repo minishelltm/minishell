@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:39:54 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/26 18:07:53 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 08:18:46 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ char		*find_bin(char **args, t_node *env);
 t_token		*line_to_tokens(char *input);
 t_command	*token_to_cmd(t_token *tokens);
 t_command	*parse_input(char *line, t_node *env);
-char        *ft_itoa(int i);
+char		*ft_itoa(int i);
 #endif
