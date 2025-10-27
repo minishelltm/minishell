@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 01:24:23 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/14 14:07:09 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 09:20:42 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ char	*find_bin(char **args, t_node *env)
 	char	*paths;
 	char	*test_path;
 	char	*bin_path;
+	int		i;
 
+	i = 0;
 	pathnode = find_node(env, "PATH=");
 	paths = ft_strdup(pathnode->data.value);
 	test_path = NULL;
@@ -99,16 +101,15 @@ char	*find_bin(char **args, t_node *env)
 	if (has_slash(args[0]) == 1)
 		return (args[0]);
 	if (paths == NULL)
-	{
 		return (NULL);
-	}
-	test_path = strtok(paths, ":"); // NOTE: Probs not allowed
+	test_path = split_path(paths, i); // NOTE: Probs not allowed
 	while (test_path != NULL)
 	{
 		bin_path = find_bin_path(test_path, args[0]);
 		if (bin_path != NULL)
 			break ;
-		test_path = strtok(NULL, ":");
+		i++;
+		test_path = split_path(paths, i);
 	}
 	return (bin_path);
 }
