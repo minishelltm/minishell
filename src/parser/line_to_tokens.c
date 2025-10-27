@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:52:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 06:35:23 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 10:43:43 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ void	make_quote_token(char *input, t_token **list, int *i)
 	while (input[(*i) + ct] && input[(*i) + ct] != quote_char)
 		ct++;
 	if (input[(*i) + ct] == quote_char)
-	{
 		input[(*i) + ct] = '\0';
-		new_token->value = ft_strdup(&input[*i]);
-	}
-	else // unmatched quote. CRASHES, FIX (+ handle memory in general lol)
+	else
+	{
+		*i = -1;
 		return (free_tokens(*list), free_tokens(new_token));
+	}
+	new_token->value = ft_strdup(&input[*i]);
 	input[(*i) + ct] = quote_char;
 	*i += ct + 1;
 	new_token->should_merge = !(is_ws(input[(*i)]) || is_operator(input[(*i)]));
@@ -110,6 +111,8 @@ t_token	*line_to_tokens(char *input)
 			make_quote_token(input, &list, &i);
 		else
 			make_word_token(input, &list, &i);
+		if (i == -1)
+			return (NULL);	
 	}
 	return (list);
 }

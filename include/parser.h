@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 00:01:07 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/25 18:09:24 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/27 11:13:30 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,5 @@ void		free_command(t_command *cmd);
 t_token		*init_token(void);
 void		free_tokens(t_token *token);
 void		add_token_back(t_token **list, t_token *new_token);
+t_token		*validate(t_token *tks);
 #endif

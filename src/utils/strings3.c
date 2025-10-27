@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 09:18:08 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 10:51:08 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,9 @@ char	*split_path(const char *s, int idx)
 	n = ft_strlen(tmp);
 	if (n && tmp[n - 1] == ':')
 		tmp[--n] = '\0';
+	if (!(*tmp))
+	{
+		return (free(tmp), NULL);
+	}
 	return (tmp);
 }

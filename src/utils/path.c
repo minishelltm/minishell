@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 02:04:53 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/10 10:45:18 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 11:00:06 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 char	*ft_pathcat(char *path, char *name)
 {
+	char	*w_slash;
 	char	*retval;
 
-	retval = malloc(ft_strlen(path) + ft_strlen(name) + 2);
-	retval = ft_strcat(path, "/");
-	retval = ft_strcat(retval, name);
+	w_slash = ft_strcat(path, "/");
+	retval = ft_strcat(w_slash, name);
+	free(w_slash);
 	return (retval);
 }

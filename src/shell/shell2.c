@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 01:24:23 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 09:20:42 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 11:02:31 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*find_loop(DIR *d, struct dirent *dirent, char *name, char *path)
 		}
 		full_path = ft_pathcat(path, dirent->d_name);
 		if (stat(full_path, &st) == 0 && S_ISDIR(st.st_mode))
-			bin_path = find_bin_path(full_path, name);
+			bin_path = (free(bin_path), find_bin_path(full_path, name));
 		dirent = readdir(d);
 		free(full_path);
 	}
@@ -102,14 +102,14 @@ char	*find_bin(char **args, t_node *env)
 		return (args[0]);
 	if (paths == NULL)
 		return (NULL);
-	test_path = split_path(paths, i); // NOTE: Probs not allowed
+	test_path = split_path(paths, i);
 	while (test_path != NULL)
 	{
 		bin_path = find_bin_path(test_path, args[0]);
 		if (bin_path != NULL)
 			break ;
 		i++;
-		test_path = split_path(paths, i);
+		test_path = (free(test_path), split_path(paths, i));
 	}
-	return (bin_path);
+	return (free(paths), free(test_path), bin_path);
 }

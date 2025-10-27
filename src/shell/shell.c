@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 08:17:52 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 11:04:06 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int	shell_loop(char ***args, t_node *env, char *line)
 		return (0);
 	interrupt = run_commands(commands, env);
 	if (interrupt == 255)
-		exit(0); // Handle exit better
-	free(commands);
+		exit(0);
+	free_command(commands);
 	return (interrupt);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:39:54 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 08:18:46 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 10:32:37 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+// typedef struct s_shell
+//{
+//    t_command	*cmd;
+//    t_node		*env;
+//}   t_shell;
 
 extern volatile sig_atomic_t	g_exit_code;
 int			shell(t_node *env);
