@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 11:21:44 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 14:06:11 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ void	expand_dollar(t_token *tks, t_node *env)
 	before_dollar = ft_substr(tks->value, 0, i);
 	i++;
 	while (tks->value[i + j] && (ft_isalnum(tks->value[i + j])
-			|| tks->value[i + j] != '_'))
+			|| tks->value[i + j] == '_'))
 		j++;
 	new_value = ft_strjoin(before_dollar, expand_var(&tks->value[i - 1], env));
 	new_value = ft_strjoin(new_value, &tks->value[i + j]);
-	printf("new = %s\n", new_value);
 	free(tks->value);
 	tks->value = new_value;
 	return ;

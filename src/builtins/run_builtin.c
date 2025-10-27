@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:39:14 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 05:36:00 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 13:55:29 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static int	check_env_key(char *key)
 			|| (key[0] >= 'A' && key[0] <= 'Z')
 			|| key[0] == '_'))
 	{
-		write(2, "setenv: Variable name must begin with a letter or _.\n", 54);
+		write(2, "export: Variable name must begin with a letter or _.\n", 54);
 		return (1);
 	}
 	if (!is_alphanum(key, ALPHANUM))
 	{
 		write(2,
-			"setenv: Variable name must contain alphanumeric characters.\n",
+			"export: Variable name must contain alphanumeric characters.\n",
 			61);
 		return (1);
 	}
@@ -48,6 +48,7 @@ int	myenv(t_node *env)
 		write(1, "\n", 1);
 		i++;
 	}
+	free_arr(envarr);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 11:04:06 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 13:57:37 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	shell(t_node *env)
 			break ;
 		line = readline("minishell$ ");
 		if (!line)
-			exit(0);
+		{
+			write(1, "exit\n", 6);
+			break ;
+		}
 		if (is_blank_line(line))
 			continue ;
 		add_history(line);
