@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_to_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 19:13:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/26 19:29:02 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 14:45:08 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	free_command(t_command *cmd)
 
 	if (cmd == NULL)
 		return ;
+	if (cmd->next != NULL)
+		free_command(cmd->next);
 	if (cmd->args != NULL)
 	{
 		i = 0;

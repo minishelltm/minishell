@@ -6,7 +6,7 @@
 /*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 14:06:11 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/27 15:18:30 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ void	merge_and_expand(t_token *tks, t_node *env)
 	while (t)
 	{
 		if (t->quote_type != SQUOTE && includes(t->value, '$'))
+		{
 			expand_dollar(t, env);
+			continue ;
+		}
 		t = t->next;
 	}
 	t = tks;

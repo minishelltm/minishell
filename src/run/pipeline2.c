@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:11:00 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 10:59:49 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 14:42:16 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ static void	exec_external(char **args, t_node *env)
 {
 	char	*path;
 
-	if (find_node(env, "PATH=") == NULL)
-	{
-		cmd_not_found(args[0]);
-		exit(127);
-	}
 	path = find_bin(args, env);
 	if (path == NULL)
 	{

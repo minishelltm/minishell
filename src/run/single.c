@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 07:40:28 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 08:34:18 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 15:08:36 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	fork_and_exec_external(t_command *cmd, t_node *env,
 {
 	pid_t	pid;
 	int		status;
+//	char	**envp;
 
 	pid = fork();
 	if (pid == -1)
@@ -84,8 +85,6 @@ static int	run_single_external(t_command *cmd, t_node *env, int hd_fd)
 {
 	char	*path;
 
-	if (find_node(env, "PATH=") == NULL)
-		return (cmd_not_found(cmd->args[0]), 1);
 	path = find_bin(cmd->args, env);
 	if (path == NULL)
 		return (cmd_not_found(cmd->args[0]), 1);
@@ -101,7 +100,5 @@ int	handle_single(t_command *commands, t_node *env)
 	r = single_try_builtin(commands, env);
 	if (r.is_builtin)
 		return (r.status);
-	if (find_node(env, "PATH=") == NULL)
-		return (cmd_not_found(commands->args[0]), 1);
 	return (run_single_external(commands, env, r.hd_fd));
 }

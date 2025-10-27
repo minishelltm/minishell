@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:39:28 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 14:21:17 by mmicael          ###   ########.fr       */
+/*   Updated: 2025/10/27 06:31:43 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_cd(char **args, t_node *env)
 	oldpwd = getcwd(NULL, 0);
 	if (args[2] != NULL)
 	{
-		write(2, "cd: Too many arguments.\n", 25);
+		write(2, "cd: Too many arguments.\n", 23);
 		return (0);
 	}
 	if (args[1] == NULL)
