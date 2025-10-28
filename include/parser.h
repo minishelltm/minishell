@@ -6,7 +6,7 @@
 /*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 00:01:07 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 14:45:51 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/27 15:56:59 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 typedef enum e_token_type
 {
 	WORD,
-	REDIR_IN, // <
-	REDIR_OUT, // >
-	HEREDOC, // <<
-	APPEND, // >>
-	PIPE, // |
+	REDIR_IN,
+	REDIR_OUT,
+	HEREDOC,
+	APPEND,
+	PIPE,
 }					t_token_type;
 
 typedef enum s_quote_type

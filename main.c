@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:39 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 08:36:55 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/28 12:51:25 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,26 @@ void	setup_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	clean_oldpwd(t_node *list)
+void	update_shlvl(t_node *list)
+{
+	t_node	*shlvl;
+	int		val;
+
+	val = 0;
+	shlvl = find_node(list, "SHLVL=");
+	if (shlvl != NULL && is_alphanum(shlvl->data.value, NUM))
+		val = ft_atoi(shlvl->data.value);
+	val += 1;
+	if (val >= 10000)
+		val = 1;
+	update_env("SHLVL=", ft_itoa(val), list);
+}
+
+void	clean_oldenv(t_node *list)
 {
 	update_env("OLDPWD=", ft_strdup(""), list);
 	update_env("PWD=", getcwd(NULL, 0), list);
+	update_shlvl(list);
 }
 
 int	main(int ac, char **av, char **env)
@@ -45,7 +61,7 @@ int	main(int ac, char **av, char **env)
 
 	retval = 0;
 	list = envify(env);
-	clean_oldpwd(list);
+	clean_oldenv(list);
 	signal(SIGINT, sig_handler);
 	if (ac != 1 || av[1] != NULL)
 		return (84);

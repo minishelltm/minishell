@@ -6,7 +6,7 @@
 /*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:39:14 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 13:55:29 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:04:29 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 
 static int	check_env_key(char *key)
 {
-	if (!((key[0] >= 'a' && key[0] <= 'z')
-			|| (key[0] >= 'A' && key[0] <= 'Z')
+	if (!((key[0] >= 'a' && key[0] <= 'z') || (key[0] >= 'A' && key[0] <= 'Z')
 			|| key[0] == '_'))
 	{
 		write(2, "export: Variable name must begin with a letter or _.\n", 54);
@@ -32,23 +31,6 @@ static int	check_env_key(char *key)
 			61);
 		return (1);
 	}
-	return (0);
-}
-
-int	myenv(t_node *env)
-{
-	char	**envarr;
-	int		i;
-
-	envarr = stringify(env);
-	i = 0;
-	while (envarr[i] != NULL)
-	{
-		write(1, envarr[i], ft_strlen(envarr[i]));
-		write(1, "\n", 1);
-		i++;
-	}
-	free_arr(envarr);
 	return (0);
 }
 
@@ -100,6 +82,16 @@ int	myunsetenv(char **args, t_node *env)
 	return (0);
 }
 
+int	is_exit(char **args, int status)
+{
+	if (ft_strncmp(args[0], "exit", 0) == 0)
+	{
+		write(1, "exit\n", 6);
+		return (255);
+	}
+	return (status);
+}
+
 int	run_builtin(char **args, t_node *env)
 {
 	int	status;
@@ -122,11 +114,9 @@ int	run_builtin(char **args, t_node *env)
 		return (myenv(env));
 	if (ft_strncmp(args[0], "export", 0) == 0)
 		return (mysetenv(args, env));
-	// if (ft_strncmp(args[0], "pwd", 0) == 0)
-	//	return (ft_pwd(args, env));
-	// if (ft_strncmp(args[0], "echo", 0) == 0)
-	// 	return (ft_echo(args, env));
-	if (ft_strncmp(args[0], "exit", 0) == 0)
-		return (255);
-	return (status);
+	if (ft_strncmp(args[0], "pwd", 0) == 0)
+		return (ft_pwd(args, env));
+	if (ft_strncmp(args[0], "echo", 0) == 0)
+		return (ft_echo(args, env));
+	return (is_exit(args, status));
 }

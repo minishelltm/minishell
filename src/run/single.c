@@ -6,60 +6,70 @@
 /*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 07:40:28 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 15:08:36 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:41:53 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
-#include "run.h"
-#include "parser.h"
 #include "envify.h"
+#include "parser.h"
+#include "run.h"
+#include "shell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-static void	parent_builtin_redirs(t_command *cmd, int heredoc_fd, int *saved)
+static void	parent_builtin_redirs(t_command *cmd, int heredoc_fd, int *saved_in,
+		int *saved_out)
 {
-	int	out_fd;
-
-	*saved = -1;
+	*saved_in = -1;
+	*saved_out = -1;
+	if (cmd->infile || heredoc_fd != -1)
+		*saved_in = dup(STDIN_FILENO);
+	if (cmd->outfile)
+		*saved_out = dup(STDOUT_FILENO);
 	if (cmd->infile)
 		apply_in_redir(cmd);
 	if (heredoc_fd != -1)
 	{
-		*saved = dup(STDIN_FILENO);
 		if (dup2(heredoc_fd, STDIN_FILENO) == -1)
 			perror("dup2");
 		close(heredoc_fd);
 	}
-	out_fd = -1;
 	if (cmd->outfile)
 		apply_out_redir(cmd);
-	(void)out_fd;
 }
 
 static t_single_res	single_try_builtin(t_command *cmd, t_node *env)
 {
 	t_single_res	res;
-	int				saved;
+	int				saved_in;
+	int				saved_out;
 
 	res.hd_fd = -1;
 	if (cmd->heredoc)
 		res.hd_fd = collect_heredoc(cmd->heredoc);
-	res.status = run_builtin(cmd->args, env);
-	res.is_builtin = (res.status != 404);
+	if (cmd->args)
+		res.is_builtin = is_b_in(cmd->args[0]);
 	if (res.is_builtin)
 	{
-		parent_builtin_redirs(cmd, res.hd_fd, &saved);
+		parent_builtin_redirs(cmd, res.hd_fd, &saved_in, &saved_out);
+		res.status = run_builtin(cmd->args, env);
 		g_exit_code = res.status;
-		restore_stdin(saved);
+		restore_stdio(saved_in, saved_out);
+		res.hd_fd = -1;
 	}
+	else
+		res.status = 0;
 	return (res);
 }
 
-static int	fork_and_exec_external(t_command *cmd, t_node *env,
-	int hd_fd, char *path)
+static int	fork_and_exec_external(t_command *cmd, t_node *env, int hd_fd,
+		char *path)
 {
 	pid_t	pid;
 	int		status;
-//	char	**envp;
 
 	pid = fork();
 	if (pid == -1)

@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmicael <mmicael@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 10:31:23 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 15:30:42 by mmicael          ###   ########.fr       */
+/*   Created: 2025/10/27 14:10:11 by mmicael           #+#    #+#             */
+/*   Updated: 2025/10/27 14:45:27 by mmicael          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
-# include "list.h"
+#include "envify.h"
+#include "shell.h"
+#include "utils.h"
 
-int	run_builtin(char **args, t_node *env);
-int	ft_cd(char **args, t_node *env);
-int	ft_pwd(char **args, t_node *env);
-int	ft_echo(char **args, t_node *env);
+int	ft_pwd(char **args, t_node *env)
+{
+	char	*cwd;
 
-#endif /* !BUILTINS_H */
+	(void)args;
+	(void)env;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+	{
+		perror("getcwd");
+		return (1);
+	}
+	printf("%s\n", cwd);
+	free(cwd);
+	return (0);
+}

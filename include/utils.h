@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:40:44 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 13:51:41 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/28 12:46:37 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,5 @@ char	*ft_substr(char const *s, int start, int len);
 void	*ft_calloc(int nmemb, int size);
 char	*split_path(const char *s, int idx);
 void	free_arr(char **arr);
+int		ft_atoi(char const *src);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:38:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 08:36:15 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 16:44:01 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RUN_H
 # include "list.h"
 # include "parser.h"
+# include <sys/types.h>
 
 typedef struct s_single_res
 {
@@ -33,6 +34,8 @@ typedef struct s_pipeline
 	int		*heredocs;
 }	t_pipeline;
 
+void	restore_stdio(int saved_in, int saved_out);
+int		is_b_in(char *name);
 int		run_bin(char *cmd, char **args, char **env);
 int		run_builtin(char **args, t_node *env);
 int		run_commands(t_command *commands, t_node *env);

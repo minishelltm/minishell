@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 07:43:18 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 08:36:14 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/27 20:49:31 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	cmd_not_found(char *name)
 {
 	write(2, name, ft_strlen(name));
 	write(2, ": Command not found.\n", 22);
+	g_exit_code = 127;
 }
 
 void	reset_signals(void)
