@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 12:34:34 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/28 19:31:37 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	expand_dollar(t_token *tks, t_node *env)
 	char	*before_dollar;
 	int		i;
 	char	*new_value;
+	char	*env_var;
 	int		j;
 
 	i = 0;
@@ -57,13 +58,15 @@ void	expand_dollar(t_token *tks, t_node *env)
 	while (tks->value[i + j] && (ft_isalnum(tks->value[i + j])
 			|| tks->value[i + j] == '_'))
 		j++;
-	new_value = ft_strjoin(before_dollar, expand_var(&tks->value[i - 1], env));
+	env_var = expand_var(&tks->value[i - 1], env);
+	new_value = ft_strjoin(before_dollar, env_var);
+	free(env_var);
 	if (tks->value[i + j] == '?')
 		j++;
-	new_value = ft_strjoin(new_value, &tks->value[i + j]);
+	env_var = ft_strjoin(new_value, &tks->value[i + j]);
 	free(tks->value);
-	tks->value = new_value;
-	return ;
+	tks->value = env_var;
+	return (free(before_dollar), free(new_value));
 }
 
 void	merge(t_token *c, t_token *n)

@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:39:14 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 18:38:50 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/28 19:35:52 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	myunsetenv(char **args, t_node *env)
 {
 	t_node	*del;
 	int		i;
+	char	*with_eq;
 
 	i = 1;
 	del = NULL;
@@ -29,10 +30,12 @@ int	myunsetenv(char **args, t_node *env)
 	}
 	while (args[i] != NULL)
 	{
-		del = find_node(env, (ft_strcat(args[i], "=")));
+		with_eq = ft_strcat(args[i], "=");
+		del = find_node(env, with_eq);
 		if (del != NULL)
 			delete_node(env, del);
 		i++;
+		free(with_eq);
 	}
 	return (0);
 }

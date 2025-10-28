@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:43:08 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 12:20:52 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/28 19:35:40 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,6 @@ char	*ft_strdup(char const *src)
 		i++;
 	}
 	dest[i] = '\0';
-//	if (dest[0] == '\0')
-//	{
-//		free(dest);
-//		return (NULL);
-//	}
 	return (dest);
 }
 
