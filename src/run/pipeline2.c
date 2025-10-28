@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:11:00 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 14:42:16 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:21:18 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	exec_external(char **args, t_node *env)
 	}
 	execve(path, args, stringify(env));
 	perror(args[0]);
-	exit(127);
+	exit(126);
 }
 
 void	child_exec_command(t_command *cmd, t_pipeline *pl,

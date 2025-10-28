@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   single.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 07:40:28 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 16:41:53 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:38:08 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static t_single_res	single_try_builtin(t_command *cmd, t_node *env)
 	{
 		parent_builtin_redirs(cmd, res.hd_fd, &saved_in, &saved_out);
 		res.status = run_builtin(cmd->args, env);
-		g_exit_code = res.status;
+		if (res.status != 255)
+			g_exit_code = res.status;
 		restore_stdio(saved_in, saved_out);
 		res.hd_fd = -1;
 	}
@@ -73,7 +74,7 @@ static int	fork_and_exec_external(t_command *cmd, t_node *env, int hd_fd,
 
 	pid = fork();
 	if (pid == -1)
-		return (perror("fork"), free(path), close(hd_fd), 84);
+		return (perror("fork"), free(path), close(hd_fd), 1);
 	if (pid == 0)
 	{
 		if (apply_redirections(cmd, hd_fd) == -1)
@@ -81,7 +82,7 @@ static int	fork_and_exec_external(t_command *cmd, t_node *env, int hd_fd,
 		reset_signals();
 		execve(path, cmd->args, stringify(env));
 		perror(cmd->args[0]);
-		exit(127);
+		exit(126);
 	}
 	free(path);
 	if (hd_fd != -1)

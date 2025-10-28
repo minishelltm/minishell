@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:39:14 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 16:04:29 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/28 18:38:50 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,6 @@
 #include "shell.h"
 #include "utils.h"
 #include <errno.h>
-
-static int	check_env_key(char *key)
-{
-	if (!((key[0] >= 'a' && key[0] <= 'z') || (key[0] >= 'A' && key[0] <= 'Z')
-			|| key[0] == '_'))
-	{
-		write(2, "export: Variable name must begin with a letter or _.\n", 54);
-		return (1);
-	}
-	if (!is_alphanum(key, ALPHANUM))
-	{
-		write(2,
-			"export: Variable name must contain alphanumeric characters.\n",
-			61);
-		return (1);
-	}
-	return (0);
-}
-
-int	mysetenv(char **args, t_node *env)
-{
-	char	*key;
-
-	key = NULL;
-	if (args[1] == NULL)
-		return (myenv(env));
-	if (check_env_key(args[1]) != 0)
-	{
-		return (1);
-	}
-	if (args[2] != NULL && args[3] == NULL)
-	{
-		key = ft_strcat(args[1], "=");
-		env = update_env(key, args[2], env);
-		return (0);
-	}
-	if (args[2] == NULL)
-	{
-		key = ft_strcat(args[1], "=");
-		env = update_env(key, ft_strdup(""), env);
-		return (0);
-	}
-	write(2, "export: Too many arguments.\n", 29);
-	return (0);
-}
 
 int	myunsetenv(char **args, t_node *env)
 {
@@ -87,6 +42,19 @@ int	is_exit(char **args, int status)
 	if (ft_strncmp(args[0], "exit", 0) == 0)
 	{
 		write(1, "exit\n", 6);
+		if (args[1] && is_alphanum(args[1], NUM))
+			g_exit_code = ft_atoi(args[1]);
+		else if (args[1])
+		{
+			write(2, "exit: numeric argument required\n", 33);
+			g_exit_code = 2;
+			return (255);
+		}
+		if (args[1] && args[2])
+		{
+			write(2, "exit: too many arguments\n", 26);
+			return (1);
+		}
 		return (255);
 	}
 	return (status);
@@ -113,7 +81,7 @@ int	run_builtin(char **args, t_node *env)
 	if (ft_strncmp(args[0], "env", 0) == 0)
 		return (myenv(env));
 	if (ft_strncmp(args[0], "export", 0) == 0)
-		return (mysetenv(args, env));
+		return (ft_export(args, env));
 	if (ft_strncmp(args[0], "pwd", 0) == 0)
 		return (ft_pwd(args, env));
 	if (ft_strncmp(args[0], "echo", 0) == 0)

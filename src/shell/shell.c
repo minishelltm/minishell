@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 13:57:37 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:36:47 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	shell_loop(char ***args, t_node *env, char *line)
 		return (0);
 	interrupt = run_commands(commands, env);
 	if (interrupt == 255)
-		exit(0);
+		exit(g_exit_code);
 	free_command(commands);
 	return (interrupt);
 }
@@ -78,5 +78,5 @@ int	shell(t_node *env)
 		interrupt = shell_loop(&args, env, line);
 		free(line);
 	}
-	return (0);
+	return (g_exit_code);
 }
