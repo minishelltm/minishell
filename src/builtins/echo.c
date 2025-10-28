@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 14:10:08 by mmicael           #+#    #+#             */
-/*   Updated: 2025/10/28 12:33:03 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/28 13:02:29 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_echo(char **args, t_node *env)
 	while (args[i])
 	{
 		write(1, args[i], ft_strlen(args[i]));
-		if (args[i + 1])
+		if (args[i + 1] && args[i][0])
 			write(1, " ", 1);
 		i++;
 	}
