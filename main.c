@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:39 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 12:51:25 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/29 17:18:08 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int ac, char **av, char **env)
 	retval = 0;
 	list = envify(env);
 	clean_oldenv(list);
-	signal(SIGINT, sig_handler);
+	setup_signals();
 	if (ac != 1 || av[1] != NULL)
 		return (84);
 	retval = shell(list);
