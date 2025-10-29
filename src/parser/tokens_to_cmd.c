@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_to_cmd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 19:13:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 14:45:08 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:21:53 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	free_command(t_command *cmd)
 		free(cmd->infile);
 	if (cmd->outfile != NULL)
 		free(cmd->outfile);
+	if (cmd->heredoc != NULL)
+		free(cmd->heredoc);
 	free(cmd);
 }
 

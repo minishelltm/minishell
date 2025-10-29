@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 01:24:23 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 14:44:51 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:13:35 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*find_bin(char **args, t_node *env)
 	test_path = NULL;
 	bin_path = NULL;
 	if (has_slash(args[0]) == 1)
-		return (ft_strdup(args[0]));
+		return (free(paths), ft_strdup(args[0]));
 	if (paths == NULL)
 		return (NULL);
 	test_path = split_path(paths, i);

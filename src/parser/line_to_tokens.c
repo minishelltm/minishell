@@ -6,12 +6,13 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:52:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 11:23:01 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/29 10:56:08 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "utils.h"
+#include <unistd.h>
 #include <stdlib.h>
 
 void	make_quote_token(char *input, t_token **list, int *i)
@@ -112,7 +113,7 @@ t_token	*line_to_tokens(char *input)
 		else
 			make_word_token(input, &list, &i);
 		if (i == -1)
-			return (NULL);
+			return (write(2, "syntax error\n", 13), NULL);
 	}
 	return (list);
 }
