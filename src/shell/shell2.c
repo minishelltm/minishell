@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 01:24:23 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/29 11:13:35 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/29 17:16:51 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@
 #include "utils.h"
 #include <dirent.h>
 #include <sys/stat.h>
-
-static char	is_dot(char *name)
-{
-	if (ft_strncmp(name, ".", 0) == 0)
-		return (1);
-	if (ft_strncmp(name, "..", 0) == 0)
-		return (1);
-	return (0);
-}
 
 static char	*find_loop(DIR *d, struct dirent *dirent, char *name, char *path)
 {
@@ -95,9 +86,9 @@ char	*find_bin(char **args, t_node *env)
 
 	i = 0;
 	pathnode = find_node(env, "PATH=");
-	paths = ft_strdup(pathnode->data.value);
-	test_path = NULL;
-	bin_path = NULL;
+	paths = NULL;
+	if (pathnode != NULL)
+		paths = ft_strdup(pathnode->data.value);
 	if (has_slash(args[0]) == 1)
 		return (free(paths), ft_strdup(args[0]));
 	if (paths == NULL)

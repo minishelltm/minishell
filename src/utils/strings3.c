@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strings3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:44:13 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 19:28:11 by tonio            ###   ########.fr       */
+/*   Updated: 2025/10/29 17:11:06 by ande-vat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ int	is_operator(char c)
 int	is_quote(char c)
 {
 	return (c == '"' || c == '\'');
+}
+
+char	is_dot(char *name)
+{
+	if (ft_strncmp(name, ".", 0) == 0)
+		return (1);
+	if (ft_strncmp(name, "..", 0) == 0)
+		return (1);
+	return (0);
 }
 
 char	*split_path(const char *s, int idx)
