@@ -6,12 +6,23 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:55:00 by ande-vat          #+#    #+#             */
-/*   Updated: 2025/10/26 17:57:17 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 05:34:22 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
 #include <stdlib.h>
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		((unsigned char *)s)[i] = 0;
+		i++;
+	}
+}
 
 void	*ft_calloc(int nmemb, int size)
 {
@@ -26,6 +37,6 @@ void	*ft_calloc(int nmemb, int size)
 	ret = malloc(s);
 	if (!ret)
 		return (NULL);
-	ft_memset(ret, 0, s);
+	ft_bzero(ret, s);
 	return (ret);
 }

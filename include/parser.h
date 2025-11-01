@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 00:01:07 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 15:56:59 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/11/01 05:30:15 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ typedef enum e_token_type
 	PIPE,
 }					t_token_type;
 
+typedef struct s_allocinfo
+{
+	int	nb_args;
+	int	nb_infiles;
+	int	nb_outfiles;
+}					t_allocinfo;
+
 typedef enum s_quote_type
 {
 	NO_QUOTE,
@@ -36,7 +43,7 @@ typedef struct s_token
 	char			*value;
 	t_token_type	type;
 	t_quote_type	quote_type;
-	bool			should_merge;
+	bool			m;
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
@@ -44,8 +51,10 @@ typedef struct s_token
 typedef struct s_command
 {
 	char				**args;
-	char				*infile;
-	char				*outfile;
+	char				**infiles;
+	int					nb_infiles;
+	char				**outfiles;
+	int					nb_outfiles;
 	int					append;
 	char				*heredoc;
 	struct s_command	*next;
@@ -54,8 +63,8 @@ typedef struct s_command
 
 int			process_token(t_command *cmd, t_token **token, int *i);
 int			process_special_token(t_command *cmd, t_token **token);
-int			alloc_args(t_command *cmd, int ac);
-int			count_args_cmd(t_token *token);
+int			alloc_args(t_command *cmd, t_allocinfo allocinfo);
+t_allocinfo	count_args_cmd(t_token *token);
 t_command	*init_command(void);
 void		free_command(t_command *cmd);
 t_token		*init_token(void);

@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 19:13:57 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 06:34:22 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 05:50:58 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,59 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	count_args_cmd(t_token *token)
+t_allocinfo	count_args_cmd(t_token *token)
 {
-	int		count;
-	t_token	*tmp;
+	t_allocinfo	ret;
+	t_token		*tmp;
 
 	tmp = token;
-	count = 0;
+	ret.nb_args = 0;
+	ret.nb_infiles = 0;
+	ret.nb_outfiles = 0;
 	while (tmp && tmp->type != PIPE)
 	{
-		if (tmp->type == WORD && (tmp->prev == NULL
-				|| (tmp->prev->type != REDIR_IN
-					&& tmp->prev->type != REDIR_OUT
-					&& tmp->prev->type != APPEND
-					&& tmp->prev->type != HEREDOC)))
-			count++;
+		if (tmp->type == REDIR_IN)
+		{
+			ret.nb_infiles++;
+			tmp = tmp->next;
+		}
+		else if (tmp->type == REDIR_OUT || tmp->type == APPEND)
+		{
+			ret.nb_outfiles++;
+			tmp = tmp->next;
+		}
+		else if (tmp->type == WORD)
+			ret.nb_args++;
 		tmp = tmp->next;
 	}
-	return (count);
+	return (ret);
 }
 
 int	process_special_token(t_command *cmd, t_token **token)
 {
 	if ((*token)->type == REDIR_IN && (*token)->next->type == WORD)
 	{
-		cmd->infile = ft_strdup((*token)->next->value);
-		if (cmd->infile == NULL)
+		cmd->infiles[cmd->nb_infiles] = ft_strdup((*token)->next->value);
+		if (cmd->infiles[cmd->nb_infiles] == NULL)
 			return (-1);
-		(*token) = (*token)->next;
+		cmd->nb_infiles++;
 	}
 	else if (((*token)->type == REDIR_OUT || (*token)->type == APPEND)
 		&& (*token)->next->type == WORD)
 	{
-		cmd->outfile = ft_strdup((*token)->next->value);
-		if (cmd->outfile == NULL)
+		cmd->outfiles[cmd->nb_outfiles] = ft_strdup((*token)->next->value);
+		if (cmd->outfiles[cmd->nb_outfiles] == NULL)
 			return (-1);
 		cmd->append = ((*token)->type == APPEND);
-		(*token) = (*token)->next;
+		cmd->nb_outfiles++;
 	}
 	else if ((*token)->type == HEREDOC && (*token)->next->type == WORD)
 	{
 		cmd->heredoc = ft_strdup((*token)->next->value);
 		if (cmd->heredoc == NULL)
 			return (-1);
-		(*token) = (*token)->next;
 	}
+	(*token) = (*token)->next;
 	return (0);
 }
 

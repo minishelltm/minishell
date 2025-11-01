@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:38:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 19:31:37 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 05:51:01 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,12 @@ void	merge(t_token *c, t_token *n)
 		new = ft_strjoin(c->value, n->value);
 		free(c->value);
 		c->value = new;
+		c->m = n->m;
+		if (n->next)
+			n->next->prev = c;
 		c->next = n->next;
+		free(n->value);
+		free(n);
 	}
 }
 
@@ -99,8 +104,11 @@ void	merge_and_expand(t_token *tks, t_node *env)
 	t = tks;
 	while (t)
 	{
-		if (t->should_merge)
+		if (t->m)
+		{
 			merge(t, t->next);
+			continue ;
+		}
 		t = t->next;
 	}
 }

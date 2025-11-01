@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 07:52:00 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 08:35:39 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 05:45:39 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,24 @@
 int	apply_in_redir(t_command *cmd)
 {
 	int	fd;
+	int	i;
 
-	if (!cmd->infile)
+	if (!cmd->infiles || cmd->nb_infiles <= 0)
 		return (0);
-	fd = open(cmd->infile, O_RDONLY);
-	if (fd == -1)
-		return (perror(cmd->infile), -1);
-	if (dup2(fd, STDIN_FILENO) == -1)
-		return (perror("dup2"), close(fd), -1);
-	close(fd);
+	i = 0;
+	while (i < cmd->nb_infiles)
+	{
+		fd = open(cmd->infiles[i], O_RDONLY);
+		if (fd == -1)
+			return (perror(cmd->infiles[i]), -1);
+		if (i < cmd->nb_infiles - 1)
+			close(fd);
+		else if (dup2(fd, STDIN_FILENO) == -1)
+			return (perror("dup2"), close(fd), -1);
+		i++;
+	}
+	if (fd != -1)
+		close(fd);
 	return (0);
 }
 
@@ -54,18 +63,27 @@ int	apply_heredoc_redir(int heredoc_fd)
 int	apply_out_redir(t_command *cmd)
 {
 	int	fd;
+	int	i;
 
-	if (!cmd->outfile)
+	if (!cmd->outfiles || cmd->nb_outfiles <= 0)
 		return (0);
-	if (cmd->append)
-		fd = open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		fd = open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-		return (perror(cmd->outfile), -1);
-	if (dup2(fd, STDOUT_FILENO) == -1)
-		return (perror("dup2"), close(fd), -1);
-	close(fd);
+	i = 0;
+	while (i < cmd->nb_outfiles)
+	{
+		if (cmd->append)
+			fd = open(cmd->outfiles[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
+		else
+			fd = open(cmd->outfiles[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd == -1)
+			return (perror(cmd->outfiles[i]), -1);
+		if (i < cmd->nb_outfiles - 1)
+			close(fd);
+		else if (dup2(fd, STDOUT_FILENO) == -1)
+			return (perror("dup2"), close(fd), -1);
+		i++;
+	}
+	if (fd != -1)
+		close(fd);
 	return (0);
 }
 

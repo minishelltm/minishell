@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 07:43:18 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/27 20:49:31 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 06:37:58 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	handle_child(char *path_to_bin, char **args, char **env)
 	reset_signals();
 	if (execve(path_to_bin, args, env) == -1)
 	{
+		free(path_to_bin);
+		free_arr(env);
 		perror(args[0]);
 		exit(127);
 	}

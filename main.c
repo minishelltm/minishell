@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ande-vat <ande-vat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:39 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/29 17:18:08 by ande-vat         ###   ########.fr       */
+/*   Updated: 2025/11/01 06:14:06 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,16 @@ volatile sig_atomic_t	g_exit_code = 0;
 void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
-		write(1, "\nminishell$", 12);
-	return ;
+	{
+		g_exit_code = 130;
+		write(1, "\n", 1);
+		if (waitpid(-1, NULL, WNOHANG) == -1)
+		{
+			rl_replace_line("", 0);
+			rl_on_new_line();
+			rl_redisplay();
+		}
+	}
 }
 
 void	setup_signals(void)

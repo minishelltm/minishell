@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 03:36:51 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 16:36:47 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 06:21:34 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	is_blank_line(char *line)
 			return (0);
 		i++;
 	}
+	if (line[0])
+		add_history(line);
 	free(line);
 	return (1);
 }
@@ -49,7 +51,10 @@ static int	shell_loop(char ***args, t_node *env, char *line)
 		return (0);
 	interrupt = run_commands(commands, env);
 	if (interrupt == 255)
-		exit(g_exit_code);
+	{
+		free_command(commands);
+		return (255);
+	}
 	free_command(commands);
 	return (interrupt);
 }
@@ -69,7 +74,7 @@ int	shell(t_node *env)
 		line = readline("minishell$ ");
 		if (!line)
 		{
-			write(1, "exit\n", 6);
+			write(1, "exit\n", 5);
 			break ;
 		}
 		if (is_blank_line(line))

@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 07:40:28 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 16:38:08 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 06:49:14 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parser.h"
 #include "run.h"
 #include "shell.h"
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,11 +26,11 @@ static void	parent_builtin_redirs(t_command *cmd, int heredoc_fd, int *saved_in,
 {
 	*saved_in = -1;
 	*saved_out = -1;
-	if (cmd->infile || heredoc_fd != -1)
+	if (cmd->infiles || heredoc_fd != -1)
 		*saved_in = dup(STDIN_FILENO);
-	if (cmd->outfile)
+	if (cmd->outfiles)
 		*saved_out = dup(STDOUT_FILENO);
-	if (cmd->infile)
+	if (cmd->infiles)
 		apply_in_redir(cmd);
 	if (heredoc_fd != -1)
 	{
@@ -37,7 +38,7 @@ static void	parent_builtin_redirs(t_command *cmd, int heredoc_fd, int *saved_in,
 			perror("dup2");
 		close(heredoc_fd);
 	}
-	if (cmd->outfile)
+	if (cmd->outfiles)
 		apply_out_redir(cmd);
 }
 
@@ -49,7 +50,11 @@ static t_single_res	single_try_builtin(t_command *cmd, t_node *env)
 
 	res.hd_fd = -1;
 	if (cmd->heredoc)
+	{
 		res.hd_fd = collect_heredoc(cmd->heredoc);
+		if (res.hd_fd == -1)
+			return ((t_single_res){-255, -255, -255});
+	}
 	if (cmd->args)
 		res.is_builtin = is_b_in(cmd->args[0]);
 	if (res.is_builtin)
@@ -69,9 +74,11 @@ static t_single_res	single_try_builtin(t_command *cmd, t_node *env)
 static int	fork_and_exec_external(t_command *cmd, t_node *env, int hd_fd,
 		char *path)
 {
+	char	**envp;
 	pid_t	pid;
 	int		status;
 
+	envp = stringify(env);
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), free(path), close(hd_fd), 1);
@@ -80,10 +87,12 @@ static int	fork_and_exec_external(t_command *cmd, t_node *env, int hd_fd,
 		if (apply_redirections(cmd, hd_fd) == -1)
 			exit(1);
 		reset_signals();
-		execve(path, cmd->args, stringify(env));
+		execve(path, cmd->args, envp);
 		perror(cmd->args[0]);
+		free_arr(envp);
 		exit(126);
 	}
+	free_arr(envp);
 	free(path);
 	if (hd_fd != -1)
 		close(hd_fd);
@@ -109,6 +118,8 @@ int	handle_single(t_command *commands, t_node *env)
 	if (commands->args == NULL)
 		return (0);
 	r = single_try_builtin(commands, env);
+	if (r.is_builtin == -255 && r.hd_fd == -255 && r.status == -255)
+		return (130);
 	if (r.is_builtin)
 		return (r.status);
 	return (run_single_external(commands, env, r.hd_fd));

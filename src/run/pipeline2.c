@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 08:11:00 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/28 16:21:18 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 06:37:39 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parser.h"
 #include "shell.h"
 #include "envify.h"
+#include "utils.h"
 
 int	*prepare_heredocs(t_command *cmds, int count)
 {
@@ -30,7 +31,11 @@ int	*prepare_heredocs(t_command *cmds, int count)
 	{
 		arr[i] = -1;
 		if (tmp != NULL && tmp->heredoc != NULL)
+		{
 			arr[i] = collect_heredoc(tmp->heredoc);
+			if (arr[i] == -1)
+				return (free(arr), NULL);
+		}
 		if (tmp != NULL)
 			tmp = tmp->next;
 		i += 1;
@@ -55,15 +60,19 @@ static void	child_setup_pipes(int prev_fd, int has_next, int pipe_fd[2])
 static void	exec_external(char **args, t_node *env)
 {
 	char	*path;
+	char	**envp;
 
+	envp = stringify(env);
 	path = find_bin(args, env);
 	if (path == NULL)
 	{
 		cmd_not_found(args[0]);
 		exit(127);
 	}
-	execve(path, args, stringify(env));
+	execve(path, args, envp);
 	perror(args[0]);
+	free(path);
+	free_arr(envp);
 	exit(126);
 }
 

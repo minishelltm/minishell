@@ -6,7 +6,7 @@
 /*   By: tonio <tonio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 11:52:36 by tonio             #+#    #+#             */
-/*   Updated: 2025/10/29 10:56:08 by tonio            ###   ########.fr       */
+/*   Updated: 2025/11/01 04:25:50 by tonio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	make_quote_token(char *input, t_token **list, int *i)
 	new_token->value = ft_strdup(&input[*i]);
 	input[(*i) + ct] = quote_char;
 	*i += ct + 1;
-	new_token->should_merge = !(is_ws(input[(*i)]) || is_operator(input[(*i)]));
+	new_token->m = (input[*i] && !(is_ws(input[*i]) || is_operator(input[*i])));
 	add_token_back(list, new_token);
 }
 
@@ -59,7 +59,7 @@ void	make_word_token(char *input, t_token **list, int *i)
 	if (ct == 0)
 		return (free_tokens(new_token));
 	buf = input[(*i) + ct];
-	new_token->should_merge = is_quote(buf);
+	new_token->m = is_quote(buf);
 	input[(*i) + ct] = '\0';
 	new_token->value = ft_strdup(&input[(*i)]);
 	input[(*i) + ct] = buf;
